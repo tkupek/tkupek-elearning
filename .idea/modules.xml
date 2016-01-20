@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/vcpBayern_eLearning.iml" filepath="$PROJECT_DIR$/vcpBayern_eLearning.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vcpby-elearning.iml" filepath="$PROJECT_DIR$/vcpby-elearning.iml" />
     </modules>
   </component>
 </project>

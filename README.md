@@ -1,3 +1,8 @@
 # tkupek-elearning
-is a small project to get to know python and the django framework
-while building a small webapp for elearning
+a pragmatic and simple elearning webapp based on python django
+
+requirements:
+- python
+- django
+- sqlite3
+

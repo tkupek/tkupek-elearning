@@ -12,7 +12,10 @@
 <body>
 
 <div class="container">
-    <h1>VCP Bayern - eLearning</h1>
+    <h1>{{ settings.title }}</h1>
+    <p>{{ settings.message }}</p>
+    <hr/>
+    <br/>
 
     {% for question in questions %}
     <h2>{{ question.id }}: {{ question.title }}</h2>
@@ -20,6 +23,10 @@
     <p style="font-style:italic">{{ question.options }} : {{ question.answer }}</p>
     <p>{{ question.explanation}}</p>
     {% endfor %}
+
+    <br/>
+    <hr/>
+    {{ settings.footer }}
 
 </div>
 

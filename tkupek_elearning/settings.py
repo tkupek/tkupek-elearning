@@ -56,7 +56,7 @@ ROOT_URLCONF = 'tkupek_elearning.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ["eLearning/templates"],
+        'DIRS': ["elearning/templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

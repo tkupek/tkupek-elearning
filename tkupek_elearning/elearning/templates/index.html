@@ -4,9 +4,11 @@
 
 <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="css/style.css">
-    <link href="images/favicon.ico" rel="shortcut icon">
-    <title>VCP Bayern - eLearning</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="{% static 'images/favicon.ico' %}" rel="shortcut icon">
+    <script type="text/javascript" src="{% static 'js/elearning.js' %}"></script>
+    <title>{{ settings.title }}</title>
 </head>
 
 <body>
@@ -15,16 +17,28 @@
     <h1>{{ settings.title }}</h1>
     <p>{{ settings.message }}</p>
     <hr/>
-    <br/>
+    <div class="margin50" />
 
-    {% for question in questions %}
-    <h2>{{ question.id }}: {{ question.title }}</h2>
-    <p>{{ question.text }}</p>
-    <p style="font-style:italic">{{ question.options }} : {{ question.answer }}</p>
-    <p>{{ question.explanation}}</p>
+    {% for question, options in questions_options.items %}
+        <h2>{{ question.id }}: {{ question.title }}</h2>
+        <p>{{ question.text }}</p>
+
+            <form action="#">
+                {% for option in options %}
+
+                    <label>
+                        <input type="checkbox" name="option" value="{{ option.id }}">
+                        {{ option.text }}
+                    </label>
+                {% endfor %}
+                <button class="margin10" type="button" id="showSolution" onmouseup="toggle_solution({{ question.id }})">{{ settings.button_solution }}</button>
+            </form>
+
+        <p id="explanation_{{ question.id }}" class="hide">{{ question.explanation }}</p>
+        <div class="margin25" />
     {% endfor %}
 
-    <br/>
+    <div class="margin50" />
     <hr/>
     {{ settings.footer }}
 

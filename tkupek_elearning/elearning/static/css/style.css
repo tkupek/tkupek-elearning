@@ -1,0 +1,35 @@
+body {
+
+}
+
+p {
+text-align: justify;
+}
+
+#showSolution {
+ display: block;
+}
+
+p[id^="explanation_"] {
+
+}
+
+.show {
+    display: block;
+}
+
+.hide {
+    display: none;
+}
+
+.margin10 {
+    margin-top: 10px;
+}
+
+.margin25 {
+    margin-top: 25px;
+}
+
+.margin50 {
+    margin-top: 50px;
+}

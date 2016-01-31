@@ -7,6 +7,7 @@ class Setting(models.Model):
     title = models.CharField(max_length=100, null=True)
     message = models.TextField(null=True)
     footer = models.TextField(null=True)
+    button_solution = models.CharField(max_length=100, null=True)
     active = models.BooleanField(unique=True, default=False)
 
     def __str__(self):

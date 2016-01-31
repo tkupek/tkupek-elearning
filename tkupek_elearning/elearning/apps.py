@@ -4,4 +4,4 @@ from django.apps import AppConfig
 
 
 class ElearningConfig(AppConfig):
-    name = 'eLearning'
+    name = 'elearning'

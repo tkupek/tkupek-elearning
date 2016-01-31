@@ -1,5 +1,5 @@
 """
-WSGI config for VCPBayern_eLearning project.
+WSGI config for tkupek_elearning project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "VCPBayern_eLearning.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tkupek_elearning.settings")
 
 application = get_wsgi_application()

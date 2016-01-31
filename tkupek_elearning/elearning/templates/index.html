@@ -13,8 +13,14 @@
 
 <div class="container">
     <h1>VCP Bayern - eLearning</h1>
-    <h2>{{ questionTitle }}</h2>
-    <p>{{ questionText }}</p>
+
+    {% for question in questions %}
+    <h2>{{ question.id }}: {{ question.title }}</h2>
+    <p>{{ question.text }}</p>
+    <p style="font-style:italic">{{ question.options }} : {{ question.answer }}</p>
+    <p>{{ question.explanation}}</p>
+    {% endfor %}
+
 </div>
 
 </body>

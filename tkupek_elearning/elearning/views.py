@@ -4,8 +4,7 @@ from django.shortcuts import render_to_response
 
 from tkupek_elearning.elearning.models import Setting, Question, Option, UserAnswer, User
 
-import pdb
-
+# import pdb
 
 def home(request):
     settings = Setting.objects.filter(active=1)
@@ -21,7 +20,7 @@ def home(request):
     return render_to_response('index.html', {'settings': settings, 'questions_options': questions_options})
 
 
-def getAnswer(request):
+def get_answer(request):
     if request.method == 'GET':
 
         request_id = request.GET.get('id')
@@ -32,17 +31,24 @@ def getAnswer(request):
         user = User.objects.get(token=request_token)
 
         try:
-            userAnswer = UserAnswer.objects.get(questionId=question.id, user=user.id)
+            user_answer = UserAnswer.objects.get(questionId=question.id, user=user.id)
         except ObjectDoesNotExist:
-            userAnswer = None
+            user_answer = None
 
-        if userAnswer is None:
-            userAnswer = UserAnswer()
-            userAnswer.questionId = question
-            userAnswer.user = user
-            userAnswer.answers = request_answers
-            userAnswer.save()
+        if user_answer is None:
+            user_answer = UserAnswer()
+            user_answer.questionId = question
+            user_answer.user = user
+            user_answer.answers = request_answers
+            user_answer.save()
 
         options = Option.objects.filter(question=question.id, correct=True)
 
-        return HttpResponse(options)
+        options_id = ""
+        for option in options:
+            options_id += str(option.id) + "_"
+
+        if options_id is not "":
+            options_id = options_id[:-1]
+
+        return HttpResponse(options_id)

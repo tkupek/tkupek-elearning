@@ -33,3 +33,11 @@ p[id^="explanation_"] {
 .margin50 {
     margin-top: 50px;
 }
+
+.correct {
+    outline: 4px solid #00a353;
+}
+
+.failed {
+    outline: 4px solid #a60000;
+}

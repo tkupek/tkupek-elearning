@@ -17,7 +17,7 @@
     <h1>{{ settings.title }}</h1>
     <p>{{ settings.message }}</p>
     <hr/>
-    <div class="margin50" />
+    <div class="margin50" ></div>
 
     {% for question, options in questions_options.items %}
         <h2>{{ question.id }}: {{ question.title }}</h2>
@@ -31,14 +31,14 @@
                         {{ option.text }}
                     </label>
                 {% endfor %}
-                <button class="margin10" type="button" id="showSolution" onmousedown="get_answer({{ question.id }})" onmouseup="toggle_solution({{ question.id }})">{{ settings.button_solution }}</button>
+                <button class="margin10" type="button" id="showSolution_{{ question.id }}" onmousedown="get_answer({{ question.id }})">{{ settings.button_solution }}</button>
             </form>
 
         <p id="explanation_{{ question.id }}" class="hide">{{ question.explanation }}</p>
         <div class="margin25" />
     {% endfor %}
 
-    <div class="margin50" />
+    <div class="margin50" ></div>
     <hr/>
     {{ settings.footer }}
 

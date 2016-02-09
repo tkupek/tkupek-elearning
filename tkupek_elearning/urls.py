@@ -21,5 +21,5 @@ import tkupek_elearning.elearning.views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'start', tkupek_elearning.elearning.views.home),
-    url(r'api', tkupek_elearning.elearning.views.getAnswer)
+    url(r'api', tkupek_elearning.elearning.views.get_answer)
 ]

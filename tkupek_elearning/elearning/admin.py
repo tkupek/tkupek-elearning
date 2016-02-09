@@ -12,7 +12,16 @@ class QuestionAdmin(admin.ModelAdmin):
         OptionInline,
     ]
 
+
+class UserAnswerInline(admin.TabularInline):
+    model = UserAnswer
+
+
+class UserAdmin(admin.ModelAdmin):
+    inlines = [
+        UserAnswerInline,
+    ]
+
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Setting),
-admin.site.register(UserAnswer),
-admin.site.register(User)
+admin.site.register(User, UserAdmin)

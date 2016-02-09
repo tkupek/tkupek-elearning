@@ -46,11 +46,11 @@ class User(models.Model):
 
 class UserAnswer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
-    questionId = models.ForeignKey(Question, on_delete=models.CASCADE, null=False)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, null=False)
     answers = models.CharField(max_length=100, null=True)
 
     def __str__(self):
-        return str(self.user) + " - " + str(self.questionId)
+        return str(self.user) + " - " + str(self.question)
 
     class Meta:
-        unique_together = (('user', 'questionId'),)
+        unique_together = (('user', 'question'),)

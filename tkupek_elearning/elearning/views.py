@@ -31,13 +31,13 @@ def get_answer(request):
         user = User.objects.get(token=request_token)
 
         try:
-            user_answer = UserAnswer.objects.get(questionId=question.id, user=user.id)
+            user_answer = UserAnswer.objects.get(question=question.id, user=user.id)
         except ObjectDoesNotExist:
             user_answer = None
 
         if user_answer is None:
             user_answer = UserAnswer()
-            user_answer.questionId = question
+            user_answer.question = question
             user_answer.user = user
             user_answer.answers = request_answers
             user_answer.save()

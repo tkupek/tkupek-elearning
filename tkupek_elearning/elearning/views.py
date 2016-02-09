@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 
@@ -5,8 +6,8 @@ from tkupek_elearning.elearning.models import Setting, Question, Option, UserAns
 
 import pdb
 
-def home(request):
 
+def home(request):
     settings = Setting.objects.filter(active=1)
     if settings:
         settings = settings[0]
@@ -21,26 +22,27 @@ def home(request):
 
 
 def getAnswer(request):
+    if request.method == 'GET':
 
-    # if request.method == 'GET':
-    #     pdb.set_trace()
-    #     request_questionId = request.GET.get('id')
-    #     request_answers = request.GET.get('answers')
-    #     request_userToken = request.GET.get('user')
-    #
-    #     question = Question.objects.filter(questionId=request_questionId)
-    #     user = User.objects.filter(token=request_userToken)
-    #
-    #     userAnswer = UserAnswer.objects.filter(questionId=question.id, user=user.token)
-    #     if not userAnswer:
-    #         userAnswer = UserAnswer()
-    #         userAnswer.questionId = question
-    #         userAnswer.user = user
-    #         userAnswer.answers = ""
-    #         userAnswer.save()
-    #     else:
-    #         return HttpResponse('error:alreadyAnswered');
-    #
-    #     options = Option.objects.filter(question=question.id)
-    #
-    #     return HttpResponse(options)
+        request_id = request.GET.get('id')
+        request_token = request.GET.get('token')
+        request_answers = request.GET.get('answers')
+
+        question = Question.objects.get(id=request_id)
+        user = User.objects.get(token=request_token)
+
+        try:
+            userAnswer = UserAnswer.objects.get(questionId=question.id, user=user.id)
+        except ObjectDoesNotExist:
+            userAnswer = None
+
+        if userAnswer is None:
+            userAnswer = UserAnswer()
+            userAnswer.questionId = question
+            userAnswer.user = user
+            userAnswer.answers = request_answers
+            userAnswer.save()
+
+        options = Option.objects.filter(question=question.id, correct=True)
+
+        return HttpResponse(options)

@@ -27,11 +27,11 @@
                 {% for option in options %}
 
                     <label>
-                        <input type="checkbox" name="option" value="{{ option.id }}">
+                        <input name="checkbox_{{ question.id }}" type="checkbox" value="{{ option.id }}">
                         {{ option.text }}
                     </label>
                 {% endfor %}
-                <button class="margin10" type="button" id="showSolution" onmouseup="toggle_solution({{ question.id }})">{{ settings.button_solution }}</button>
+                <button class="margin10" type="button" id="showSolution" onmousedown="get_answer({{ question.id }})" onmouseup="toggle_solution({{ question.id }})">{{ settings.button_solution }}</button>
             </form>
 
         <p id="explanation_{{ question.id }}" class="hide">{{ question.explanation }}</p>

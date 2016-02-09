@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from tkupek_elearning.elearning.models import Option, Setting, Question
+from tkupek_elearning.elearning.models import Option, Setting, Question, UserAnswer, User
 
 
 class OptionInline(admin.TabularInline):
@@ -13,4 +13,6 @@ class QuestionAdmin(admin.ModelAdmin):
     ]
 
 admin.site.register(Question, QuestionAdmin)
-admin.site.register(Setting)
+admin.site.register(Setting),
+admin.site.register(UserAnswer),
+admin.site.register(User)

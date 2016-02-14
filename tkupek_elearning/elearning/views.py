@@ -1,11 +1,13 @@
 import datetime
+import json
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 
-from tkupek_elearning.elearning.models import Setting, Question, Option, UserAnswer, User
+from tkupek_elearning.elearning.models import Setting, Question, Option, UserAnswer, User, UserAnswerOptions
 
-# import pdb
+
+import pdb
 
 
 def start(request):
@@ -52,6 +54,7 @@ def get_answer(request):
         request_id = request.GET.get('id')
         request_token = request.GET.get('token')
         request_answers = request.GET.get('answers')
+        request_answers = json.loads(request_answers)
 
         question = Question.objects.get(id=request_id)
         user = User.objects.get(token=request_token)
@@ -63,17 +66,20 @@ def get_answer(request):
             user_answer = UserAnswer()
             user_answer.question = question
             user_answer.user = user
-            user_answer.answers = request_answers
             user_answer.save()
+
+            for option in request_answers:
+                user_answer_options = UserAnswerOptions()
+                user_answer_options.user_answer = user_answer
+                user_answer_options.option = Option.objects.get(id=option)
+                user_answer_options.save()
 
         options = Option.objects.filter(question=question.id, correct=True)
 
-        options_id = ""
+        options_id = []
         for option in options:
-            options_id += str(option.id) + "_"
-
-        if options_id is not "":
-            options_id = options_id[:-1]
+            options_id.append(option.id)
+        options_id = json.dumps(options_id)
 
         return HttpResponse(options_id)
 
@@ -92,7 +98,7 @@ def log_last_seen(user):
     user.save()
 
 
-def statistic():
+def statistic(request):
 
     settings = Setting.objects.get(active=1)
     users = User.objects.all()

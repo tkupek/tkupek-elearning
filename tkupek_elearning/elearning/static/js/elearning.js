@@ -85,7 +85,7 @@ function get_answer(id) {
 
     var questionId=encodeURIComponent(id);
     var token=encodeURIComponent(QueryString.token);
-    var answers=encodeURIComponent(getCheckboxAnswers(id));
+    var answers=encodeURIComponent(JSON.stringify(getCheckboxAnswers(id)));
 
     answerRequest.open("GET", "/api?id="+questionId+"&token="+token+"&answers="+answers, true)
     answerRequest.send(null)
@@ -93,17 +93,13 @@ function get_answer(id) {
 
 function getCheckboxAnswers(id) {
 
-    var answers = "";
+    var answers = [];
 
     var elements = document.getElementsByName("checkbox_" + id);
     for(var i = 0; i < elements.length; i++) {
         if(elements[i].checked) {
-            answers += elements[i].value + "_";
+            answers.push(parseInt(elements[i].value));
         }
-    }
-
-    if(answers != "") {
-        answers = answers.substring(0, answers.length - 1);
     }
 
     return answers;
@@ -111,7 +107,7 @@ function getCheckboxAnswers(id) {
 
 function parseResponse(id, responseText) {
 
-    var correctOptions = responseText.split("_");
+    var correctOptions = JSON.parse(responseText);
 
     var elements = document.getElementsByName("checkbox_" + id);
 

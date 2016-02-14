@@ -4,20 +4,43 @@ from django.shortcuts import render_to_response
 
 from tkupek_elearning.elearning.models import Setting, Question, Option, UserAnswer, User
 
-# import pdb
+import pdb
 
 def home(request):
+
+    token = request.GET.get('token')
+
+    try:
+        user = User.objects.get(token=token)
+    except ObjectDoesNotExist:
+        user = None
+
     settings = Setting.objects.filter(active=1)
     if settings:
         settings = settings[0]
 
-    questions_options = {}
-    questions = Question.objects.all()
-    for question in questions:
-        options = Option.objects.filter(question=question.id)
-        questions_options[question] = options
+    if user is not None:
+        settings.message_welcome_user = settings.message_welcome_user.replace('{username}', user.name)
 
-    return render_to_response('index.html', {'settings': settings, 'questions_options': questions_options})
+        questions_options = {}
+        questions = Question.objects.all()
+        for question in questions:
+            options = Option.objects.filter(question=question.id)
+
+            user_answer = get_user_answer(question, user)
+
+            if user_answer is None:
+                question.enable = True
+            else:
+                question.enable = False
+
+            questions_options[question] = options
+            questions_options[question] = options
+
+        return render_to_response('elearning.html', {'settings': settings, 'questions_options': questions_options})
+
+    else:
+        return render_to_response('access_denied.html', {'settings': settings})
 
 
 def get_answer(request):
@@ -30,10 +53,7 @@ def get_answer(request):
         question = Question.objects.get(id=request_id)
         user = User.objects.get(token=request_token)
 
-        try:
-            user_answer = UserAnswer.objects.get(question=question.id, user=user.id)
-        except ObjectDoesNotExist:
-            user_answer = None
+        user_answer = get_user_answer(question, user)
 
         if user_answer is None:
             user_answer = UserAnswer()
@@ -52,3 +72,12 @@ def get_answer(request):
             options_id = options_id[:-1]
 
         return HttpResponse(options_id)
+
+
+def get_user_answer(question, user):
+    try:
+        user_answer = UserAnswer.objects.get(question=question.id, user=user.id)
+    except ObjectDoesNotExist:
+        user_answer = None
+
+    return user_answer;

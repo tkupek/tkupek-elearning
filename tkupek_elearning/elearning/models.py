@@ -1,16 +1,21 @@
 from __future__ import unicode_literals
 
-import uuid
+import hashlib
+import os
 
+import binascii
 from django.db import models
 from django.db.models.signals import post_init, pre_init
 
 
 class Setting(models.Model):
     title = models.CharField(max_length=100, null=True)
-    message = models.TextField(null=True)
     footer = models.TextField(null=True)
+    message_welcome_user = models.TextField(null=True)
+    message_access_denied = models.TextField(null=True)
+    message_already_answered = models.TextField(null=True)
     button_solution = models.CharField(max_length=100, null=True)
+    logo = models.CharField(max_length=256, null=True)
     active = models.BooleanField(unique=True, default=False)
 
     def __str__(self):
@@ -36,8 +41,13 @@ class Option(models.Model):
         return self.text
 
 
+def gen_token():
+    return hashlib.sha1(os.urandom(128)).hexdigest()
+
+
 class User(models.Model):
-    token = models.CharField(max_length=32, null=True)
+
+    token = models.CharField(max_length=40, null=True, default=gen_token)
     name = models.CharField(max_length=100, null=False)
 
     def __str__(self):

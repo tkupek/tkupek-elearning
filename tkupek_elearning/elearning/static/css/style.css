@@ -41,3 +41,13 @@ p[id^="explanation_"] {
 .failed {
     outline: 4px solid #a60000;
 }
+
+.mainLogo {
+    width: 300px;
+    height: auto;
+    float: right;
+}
+
+.message_already_answered {
+    font-style: italic;
+}

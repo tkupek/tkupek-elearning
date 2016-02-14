@@ -7,21 +7,25 @@
     {% load staticfiles %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link href="{% static 'images/favicon.ico' %}" rel="shortcut icon">
-    <script type="text/javascript" src="{% static 'js/elearning.js' %}"></script>
     <title>{{ settings.title }}</title>
 </head>
 
 <body>
 
 <div class="container">
+    <img src="{{ settings.logo }}" class="mainLogo">
     <h1>{{ settings.title }}</h1>
-    <p>{{ settings.message }}</p>
+    <p>{{ settings.message_welcome_user }}</p>
     <hr/>
     <div class="margin50" ></div>
 
     {% for question, options in questions_options.items %}
         <h2>{{ question.id }}: {{ question.title }}</h2>
         <p>{{ question.text }}</p>
+
+        <p id="enable-{{ question.id }}" data-value="{{ question.enable }}" data-questionId= "{{ question.id }}" class="message_already_answered hide">
+            {{ settings.message_already_answered }}
+        </p>
 
             <form action="#">
                 {% for option in options %}
@@ -44,5 +48,6 @@
 
 </div>
 
+<script type="text/javascript" src="{% static 'js/elearning.js' %}"></script>
 </body>
 </html>

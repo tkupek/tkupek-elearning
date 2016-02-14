@@ -1,6 +1,54 @@
+var QueryString = function () {
+  // This function is anonymous, is executed immediately and
+  // the return value is assigned to QueryString!
+  var query_string = {};
+  var query = window.location.search.substring(1);
+  var vars = query.split("&");
+  for (var i=0;i<vars.length;i++) {
+    var pair = vars[i].split("=");
+        // If first entry with this name
+    if (typeof query_string[pair[0]] === "undefined") {
+      query_string[pair[0]] = decodeURIComponent(pair[1]);
+        // If second entry with this name
+    } else if (typeof query_string[pair[0]] === "string") {
+      var arr = [ query_string[pair[0]],decodeURIComponent(pair[1]) ];
+      query_string[pair[0]] = arr;
+        // If third or later entry with this name
+    } else {
+      query_string[pair[0]].push(decodeURIComponent(pair[1]));
+    }
+  }
+    return query_string;
+}();
+
+window.onload = init();
+
+function init() {
+    enable_disable_question();
+}
+
+function enable_disable_question() {
+    var elements = document.querySelectorAll("p[id*='enable-']");
+
+    for(var i = 0; i < elements.length; i++) {
+        var element = elements[i];
+        var questionId = element.getAttribute("data-questionId");
+
+        if(element.getAttribute("data-value") == "False") {
+            element.className = element.className.replace("hide", "");
+            //document.getElementById("showSolution_" + questionId).disabled = true;
+            //get_answer(element.getAttribute("data-questionId"));
+        } else {
+
+
+        }
+    }
+}
+
+
 function toggle_solution(id)
 {
-    element = document.getElementById("explanation_" + id);
+    var element = document.getElementById("explanation_" + id);
     if (element.className == "show") {
         element.className = "hide";
     } else {
@@ -10,7 +58,7 @@ function toggle_solution(id)
 
 function show_solution(id)
 {
-    element = document.getElementById("explanation_" + id);
+    var element = document.getElementById("explanation_" + id);
     if (element.className == "hide") {
         element.className = "show";
     }
@@ -18,7 +66,7 @@ function show_solution(id)
 
 function get_answer(id) {
 
-    showSolutionButton = document.getElementById("showSolution_" + id);
+    var showSolutionButton = document.getElementById("showSolution_" + id);
     showSolutionButton.disabled = true;
 
     show_solution(id);
@@ -35,11 +83,11 @@ function get_answer(id) {
      }
     }
 
-    var questionId=encodeURIComponent(id)
-    var token=encodeURIComponent("1ea6de64cf5a11e5ada41c6f6525891e")
-    var answers=encodeURIComponent(getCheckboxAnswers(id))
+    var questionId=encodeURIComponent(id);
+    var token=encodeURIComponent(QueryString.token);
+    var answers=encodeURIComponent(getCheckboxAnswers(id));
 
-    answerRequest.open("GET", "api?id="+questionId+"&token="+token+"&answers="+answers, true)
+    answerRequest.open("GET", "/api?id="+questionId+"&token="+token+"&answers="+answers, true)
     answerRequest.send(null)
 }
 
@@ -91,7 +139,6 @@ function parseResponse(id, responseText) {
     }
 }
 
-
 function ajaxRequest() {
 
  var activexmodes=["Msxml2.XMLHTTP", "Microsoft.XMLHTTP"] //activeX versions to check for in IE
@@ -110,3 +157,4 @@ function ajaxRequest() {
  else
   return false
 }
+

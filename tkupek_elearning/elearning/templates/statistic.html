@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="{% static 'images/favicon.ico' %}" rel="shortcut icon">
+    <title>{{ settings.title }}</title>
+</head>
+
+<body>
+
+<div class="container">
+    <img src="{{ settings.logo }}" class="mainLogo">
+    <h1>{{ settings.title }}</h1>
+    <p>Welcome to the statistic backend!</p>
+    <hr/>
+    <div class="margin50" ></div>
+
+    <h2>Users</h2>
+    <table>
+        <tr class="table_headline">
+            <td>name</td>
+            <td>questions answered</td>
+            <td>last seen</td>
+        </tr>
+    {% for user in users %}
+        <tr>
+            <td>{{ user.name }}</td>
+            <td>{{ user.questions_answered }}</td>
+            <td>{{ user.last_seen }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+
+    <div class="margin50" ></div>
+
+    <h2>Questions</h2>
+    <table>
+        <tr class="table_headline">
+            <td>title</td>
+            <td>answers</td>
+        </tr>
+        {% for question in questions %}
+        <tr>
+            <td>{{ question.title }}</td>
+            <td>{{ question.answers }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div class="margin50" ></div>
+    <hr/>
+    {{ settings.footer }}
+
+</div>
+
+</body>
+</html>

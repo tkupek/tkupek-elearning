@@ -51,3 +51,7 @@ p[id^="explanation_"] {
 .message_already_answered {
     font-style: italic;
 }
+
+.table_headline {
+    font-weight: bold;
+}

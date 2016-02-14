@@ -1,12 +1,14 @@
+import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 
 from tkupek_elearning.elearning.models import Setting, Question, Option, UserAnswer, User
 
-import pdb
+# import pdb
 
-def home(request):
+
+def start(request):
 
     token = request.GET.get('token')
 
@@ -15,11 +17,12 @@ def home(request):
     except ObjectDoesNotExist:
         user = None
 
-    settings = Setting.objects.filter(active=1)
-    if settings:
-        settings = settings[0]
+    settings = Setting.objects.get(active=1)
 
     if user is not None:
+
+        log_last_seen(user)
+
         settings.message_welcome_user = settings.message_welcome_user.replace('{username}', user.name)
 
         questions_options = {}
@@ -52,6 +55,7 @@ def get_answer(request):
 
         question = Question.objects.get(id=request_id)
         user = User.objects.get(token=request_token)
+        log_last_seen(user)
 
         user_answer = get_user_answer(question, user)
 
@@ -80,4 +84,24 @@ def get_user_answer(question, user):
     except ObjectDoesNotExist:
         user_answer = None
 
-    return user_answer;
+    return user_answer
+
+
+def log_last_seen(user):
+    user.last_seen = datetime.datetime.now()
+    user.save()
+
+
+def statistic():
+
+    settings = Setting.objects.get(active=1)
+    users = User.objects.all()
+
+    for user in users:
+        user.questions_answered = UserAnswer.objects.filter(user=user.id).count()
+
+    questions = Question.objects.all()
+    for question in questions:
+        question.answers = UserAnswer.objects.filter(question=question.id).count()
+
+    return render_to_response('statistic.html', {'settings': settings, 'users': users, 'questions': questions})

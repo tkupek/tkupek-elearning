@@ -20,6 +20,7 @@ import tkupek_elearning.elearning.views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'start', tkupek_elearning.elearning.views.home),
-    url(r'api', tkupek_elearning.elearning.views.get_answer)
+    url(r'start', tkupek_elearning.elearning.views.start),
+    url(r'api', tkupek_elearning.elearning.views.get_answer),
+    url(r'statistic', tkupek_elearning.elearning.views.statistic)
 ]

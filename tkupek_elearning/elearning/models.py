@@ -16,7 +16,7 @@ class Setting(models.Model):
     logo = models.CharField(max_length=256, null=True)
     active = models.BooleanField(unique=True, default=False)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.title
 
 
@@ -26,8 +26,9 @@ class Question(models.Model):
     text = models.TextField(null=True)
     explanation = models.TextField(null=True)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.title
+
 
 
 class Option(models.Model):
@@ -35,7 +36,7 @@ class Option(models.Model):
     correct = models.BooleanField(null=False, default=False)
     question = models.ForeignKey(Question, on_delete=models.CASCADE, null=False)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.text
 
 
@@ -49,7 +50,7 @@ class User(models.Model):
     name = models.CharField(max_length=100, null=False)
     last_seen = models.DateTimeField(null=True)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.name
 
 
@@ -57,7 +58,7 @@ class UserAnswer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
     question = models.ForeignKey(Question, on_delete=models.CASCADE, null=False)
 
-    def __str__(self):
+    def __unicode__(self):
         return str(self.user) + " - " + str(self.question)
 
     class Meta:

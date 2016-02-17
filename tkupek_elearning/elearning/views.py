@@ -60,12 +60,33 @@ def get_answer(request):
         user = User.objects.get(token=request_token)
         log_last_seen(user)
 
+        correct_options = Option.objects.filter(question=question.id, correct=True)
+        correct_option_checklist = []
+        for option in correct_options:
+            correct_option_checklist.append(option.id)
+
+        options_id = []
+        for option in correct_options:
+            options_id.append(option.id)
+        options_id = json.dumps(options_id)
+
         user_answer = get_user_answer(question, user)
 
         if user_answer is None:
+            correct = False
+
             user_answer = UserAnswer()
             user_answer.question = question
             user_answer.user = user
+
+            for option in request_answers:
+                if option in correct_option_checklist:
+                    correct_option_checklist.remove(option)
+
+            if len(correct_option_checklist) is 0:
+                correct = True
+
+            user_answer.correct = correct
             user_answer.save()
 
             for option in request_answers:
@@ -73,13 +94,6 @@ def get_answer(request):
                 user_answer_options.user_answer = user_answer
                 user_answer_options.option = Option.objects.get(id=option)
                 user_answer_options.save()
-
-        options = Option.objects.filter(question=question.id, correct=True)
-
-        options_id = []
-        for option in options:
-            options_id.append(option.id)
-        options_id = json.dumps(options_id)
 
         return HttpResponse(options_id)
 
@@ -109,5 +123,7 @@ def statistic(request):
     questions = Question.objects.all()
     for question in questions:
         question.answers = UserAnswer.objects.filter(question=question.id).count()
+        question.correct_answers = UserAnswer.objects.filter(question=question.id, correct=True).count()
+        question.correct_answers_percentage = question.correct_answers / question.answers
 
     return render_to_response('statistic.html', {'settings': settings, 'users': users, 'questions': questions})

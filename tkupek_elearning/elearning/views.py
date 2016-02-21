@@ -1,13 +1,21 @@
-import datetime
-import json
+from __future__ import division
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
+import datetime
+import json
 
 from tkupek_elearning.elearning.models import Setting, Question, Option, UserAnswer, User, UserAnswerOptions
 
 
 import pdb
+
+
+def get_progress(user):
+    progress_max = Question.objects.all().count()
+    progress_current = UserAnswer.objects.filter(user=user.id).count()
+    progress = str(int(progress_current / progress_max * 100))
+    return progress
 
 
 def start(request):
@@ -42,7 +50,9 @@ def start(request):
             questions_options[question] = options
             questions_options[question] = options
 
-        return render_to_response('elearning.html', {'settings': settings, 'questions_options': questions_options})
+        progress = get_progress(user)
+
+        return render_to_response('elearning.html', {'settings': settings, 'questions_options': questions_options, 'progress': progress})
 
     else:
         return render_to_response('access_denied.html', {'settings': settings})
@@ -95,7 +105,10 @@ def get_answer(request):
                 user_answer_options.option = Option.objects.get(id=option)
                 user_answer_options.save()
 
-        return HttpResponse(options_id)
+        holder = {'options_id': options_id, 'progress': get_progress(user)}
+        holder = json.dumps(holder)
+
+        return HttpResponse(holder)
 
 
 def get_user_answer(question, user):
@@ -124,6 +137,8 @@ def statistic(request):
     for question in questions:
         question.answers = UserAnswer.objects.filter(question=question.id).count()
         question.correct_answers = UserAnswer.objects.filter(question=question.id, correct=True).count()
-        question.correct_answers_percentage = question.correct_answers / question.answers
+        if question.answers:
+            question.correct_answers_percentage = str(int(question.correct_answers / question.answers * 100))
+            question.correct_answers_percentage += str(' %')
 
     return render_to_response('statistic.html', {'settings': settings, 'users': users, 'questions': questions})

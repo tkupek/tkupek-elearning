@@ -7,7 +7,15 @@
     {% load staticfiles %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link href="{% static 'images/favicon.ico' %}" rel="shortcut icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>{{ settings.title }}</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 </head>
 
 <body>
@@ -20,7 +28,7 @@
     <div class="margin50" ></div>
 
     <h2>Users</h2>
-    <table>
+    <table class="table">
         <tr class="table_headline">
             <td>name</td>
             <td>questions answered</td>
@@ -38,7 +46,7 @@
     <div class="margin50" ></div>
 
     <h2>Questions</h2>
-    <table>
+    <table class="table">
         <tr class="table_headline">
             <td>title</td>
             <td>answers</td>
@@ -57,7 +65,10 @@
 
     <div class="margin50" ></div>
     <hr/>
-    {{ settings.footer }}
+    <div class="container footer">
+        {{ settings.footer }}
+    </div>
+
 
 </div>
 

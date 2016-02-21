@@ -59,8 +59,8 @@ function toggle_solution(id)
 function show_solution(id)
 {
     var element = document.getElementById("explanation_" + id);
-    if (element.className == "hide") {
-        element.className = "show";
+    if (element.className.indexOf("hide") > -1) {
+        element.className = element.className.replace("hide", "show");
     }
 }
 
@@ -76,9 +76,10 @@ function get_answer(id) {
      if (answerRequest.readyState==4){
       if (answerRequest.status==200 || window.location.href.indexOf("http")==-1){
        parseResponse(id, answerRequest.responseText);
+       setButtonToNext(id);
       }
       else{
-       alert("An error has occured making the request");
+       alert("Sorry, sending your answer was not successful!");
       }
      }
     }
@@ -89,6 +90,35 @@ function get_answer(id) {
 
     answerRequest.open("GET", "/api?id="+questionId+"&token="+token+"&answers="+answers, true)
     answerRequest.send(null)
+}
+
+function setButtonToNext(id) {
+    button = document.getElementById('showSolution_' + id);
+    button.className = button.className.replace("show", "hide");
+
+    if(getNextQuestion(id)) {
+        button = document.getElementById('next_' + id);
+        button.className = button.className.replace("hide", "show");
+    }
+}
+
+function scrollToNextQuestion(id) {
+    var nextQuestion = getNextQuestion(id);
+
+    if(nextQuestion) {
+        location.href = "#" + nextQuestion.id;
+    }
+}
+
+function getNextQuestion(id) {
+    var questions = document.getElementsByName("question");
+
+    for(var i = 0; i < questions.length; i++) {
+        if(questions[i].id == "question_" + id) {
+            return questions[i+1];
+        }
+    }
+    return null;
 }
 
 function getCheckboxAnswers(id) {
@@ -107,32 +137,45 @@ function getCheckboxAnswers(id) {
 
 function parseResponse(id, responseText) {
 
-    var correctOptions = JSON.parse(responseText);
+    var correctOptions = JSON.parse(responseText).options_id;
+    var progress = JSON.parse(responseText).progress;
 
+    setCorrectOptions(correctOptions, id)
+    setProgress(progress)
+}
+
+function setCorrectOptions(correctOptions, id) {
     var elements = document.getElementsByName("checkbox_" + id);
+        var holders = document.getElementsByName("checkbox_div_" + id);
 
-    for(var i = 0; i < elements.length; i++) {
-        var element = elements[i];
-        element.className="";
+        for(var i = 0; i < elements.length; i++) {
+            var element = elements[i];
+            var holder = holders[i];
 
-        var correct = isCorrectOption(element.value);
-        if(correct) {
-            element.className="correct";
-        } else {
-            if(element.checked) {
-                element.className="failed";
+            var correct = isCorrectOption(element.value);
+            if(correct) {
+                holder.className = holder.className + " list-group-item-success";
+            } else {
+                if(element.checked) {
+                    holder.className = holder.className + " list-group-item-danger";;
+                }
             }
-        }
-     }
+            element.disabled = true;
+         }
 
-    function isCorrectOption(option) {
-        for(var i = 0; i < correctOptions.length; i++) {
-            if(correctOptions[i] == option) {
-                return true;
+        function isCorrectOption(option) {
+            for(var i = 0; i < correctOptions.length; i++) {
+                if(correctOptions[i] == option) {
+                    return true;
+                }
             }
+            return false;
         }
-        return false;
-    }
+}
+
+function setProgress(progress) {
+    progressbar = document.getElementById("progressbar");
+    progressbar.style.width = progress + "%";
 }
 
 function ajaxRequest() {

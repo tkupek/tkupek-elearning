@@ -7,19 +7,33 @@
     {% load staticfiles %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link href="{% static 'images/favicon.ico' %}" rel="shortcut icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>{{ settings.title }}</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 </head>
 
 <body>
 
 <div class="container">
+
     <img src="{{ settings.logo }}" class="mainLogo">
     <h1>{{ settings.title }}</h1>
     <p>{{ settings.message_welcome_user }}</p>
+    <div class="progress">
+        <div id="progressbar" class="progress-bar progress-bar-striped" role="progressbar" style="width: {{ progress }}%">
+        </div>
+    </div>
     <hr/>
     <div class="margin50" ></div>
 
     {% for question, options in questions_options.items %}
+    <div class="container question" name="question" id="question_{{ question.id }}">
         <h2>{{ question.id }}: {{ question.title }}</h2>
         <p>{{ question.text }}</p>
 
@@ -27,19 +41,28 @@
             {{ settings.message_already_answered }}
         </p>
 
-            <form action="#">
-                {% for option in options %}
-
+            <ul class="list-group ">
+            {% for option in options %}
+                <li name="checkbox_div_{{ question.id }}" class="list-group-item">
                     <label>
                         <input name="checkbox_{{ question.id }}" type="checkbox" value="{{ option.id }}">
                         {{ option.text }}
                     </label>
-                {% endfor %}
-                <button class="margin10" type="button" id="showSolution_{{ question.id }}" onmousedown="get_answer({{ question.id }})">{{ settings.button_solution }}</button>
-            </form>
+                </li>
+            {% endfor %}
+            </ul>
 
-        <p id="explanation_{{ question.id }}" class="hide">{{ question.explanation }}</p>
-        <div class="margin25"></div>
+            <div class="container">
+                <button class="btn btn-default show" type="button" id="showSolution_{{ question.id }}" onmouseup="get_answer({{ question.id }})">{{ settings.text_solution }}</button>
+                <button class="btn btn-default hide" type="button" id="next_{{ question.id }}" onmouseup="scrollToNextQuestion({{ question.id }})">{{ settings.text_next }}</button>
+            </div>
+
+        <div class="margin10 well well-sm hide" id="explanation_{{ question.id }}">
+            <h3>{{ settings.text_answer }}</h3>
+            <p>{{ question.explanation }}</p>
+        </div>
+        <div class="margin75"></div>
+    </div>
     {% endfor %}
 
     <div class="margin50" ></div>

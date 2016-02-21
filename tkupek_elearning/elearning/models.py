@@ -12,11 +12,13 @@ class Setting(models.Model):
     message_welcome_user = models.TextField(null=True)
     message_access_denied = models.TextField(null=True)
     message_already_answered = models.TextField(null=True)
-    button_solution = models.CharField(max_length=100, null=True)
+    text_answer = models.CharField(max_length=100, null=True)
+    text_solution = models.CharField(max_length=100, null=True)
+    text_next = models.CharField(max_length=100, null=True)
     logo = models.CharField(max_length=256, null=False)
     active = models.BooleanField(unique=True, default=False)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.title
 
 
@@ -26,16 +28,16 @@ class Question(models.Model):
     text = models.TextField(null=True)
     explanation = models.TextField(null=True)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.title
 
 
 class Option(models.Model):
-    text = models.CharField(max_length=100, null=True)
+    text = models.CharField(max_length=256, null=True)
     correct = models.BooleanField(null=False, default=False)
     question = models.ForeignKey(Question, on_delete=models.CASCADE, null=False)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.text
 
 
@@ -49,7 +51,7 @@ class User(models.Model):
     name = models.CharField(max_length=100, null=False)
     last_seen = models.DateTimeField(null=True)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.name
 
 
@@ -58,8 +60,8 @@ class UserAnswer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, null=False)
     correct = models.NullBooleanField(null=True)
 
-    def __str__(self):
-        return str(self.user) + " - " + str(self.question)
+    def __unicode__(self):
+        return str(self.user) + " - " + str(self.question.id)
 
     class Meta:
         unique_together = (('user', 'question'),)
@@ -71,3 +73,6 @@ class UserAnswerOptions(models.Model):
 
     class Meta:
         unique_together = (('user_answer', 'option'),)
+
+    def __unicode__(self):
+        return str(self.user_answer) + " - " + str(self.option)

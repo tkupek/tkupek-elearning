@@ -34,12 +34,8 @@ p[id^="explanation_"] {
     margin-top: 50px;
 }
 
-.correct {
-    outline: 4px solid #00a353;
-}
-
-.failed {
-    outline: 4px solid #a60000;
+.margin75 {
+    margin-top: 75px;
 }
 
 .mainLogo {
@@ -54,4 +50,8 @@ p[id^="explanation_"] {
 
 .table_headline {
     font-weight: bold;
+}
+
+.footer {
+    color: #b3b3b3
 }

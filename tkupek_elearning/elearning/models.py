@@ -13,7 +13,7 @@ class Setting(models.Model):
     message_access_denied = models.TextField(null=True)
     message_already_answered = models.TextField(null=True)
     button_solution = models.CharField(max_length=100, null=True)
-    logo = models.CharField(max_length=256, null=True)
+    logo = models.CharField(max_length=256, null=False)
     active = models.BooleanField(unique=True, default=False)
 
     def __unicode__(self):
@@ -28,7 +28,6 @@ class Question(models.Model):
 
     def __unicode__(self):
         return self.title
-
 
 
 class Option(models.Model):

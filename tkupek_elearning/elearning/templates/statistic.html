@@ -42,11 +42,15 @@
         <tr class="table_headline">
             <td>title</td>
             <td>answers</td>
+            <td>correct</td>
+            <td>correct percentage</td>
         </tr>
         {% for question in questions %}
         <tr>
             <td>{{ question.title }}</td>
             <td>{{ question.answers }}</td>
+            <td>{{ question.correct_answers }}</td>
+            <td>{{ question.correct_answers_percentage }}</td>
         </tr>
         {% endfor %}
     </table>

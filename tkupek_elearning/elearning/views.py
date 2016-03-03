@@ -27,7 +27,13 @@ def start(request):
     except ObjectDoesNotExist:
         user = None
 
-    settings = Setting.objects.get(active=1)
+    try:
+        settings = Setting.objects.get(active=1)
+    except ObjectDoesNotExist:
+        settings = None
+
+    if settings is None:
+        return render_to_response('setting_null.html')
 
     if user is not None:
 

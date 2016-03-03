@@ -6,6 +6,10 @@ import os
 from django.db import models
 
 
+def gen_token():
+    return hashlib.sha1(os.urandom(128)).hexdigest()
+
+
 class Setting(models.Model):
     title = models.CharField(max_length=100, null=True)
     footer = models.TextField(null=True)
@@ -17,6 +21,7 @@ class Setting(models.Model):
     text_next = models.CharField(max_length=100, null=True)
     logo = models.CharField(max_length=256, null=False)
     active = models.BooleanField(unique=True, default=False)
+    token = models.CharField(max_length=40, null=True, default=gen_token)
 
     def __unicode__(self):
         return self.title
@@ -39,10 +44,6 @@ class Option(models.Model):
 
     def __unicode__(self):
         return self.text
-
-
-def gen_token():
-    return hashlib.sha1(os.urandom(128)).hexdigest()
 
 
 class User(models.Model):

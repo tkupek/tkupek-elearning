@@ -22,5 +22,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'start', tkupek_elearning.elearning.views.start),
     url(r'api', tkupek_elearning.elearning.views.get_answer),
-    url(r'statistic', tkupek_elearning.elearning.views.statistic)
+    url(r'statistic', tkupek_elearning.elearning.views.statistic),
+
 ]

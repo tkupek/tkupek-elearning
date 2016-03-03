@@ -37,10 +37,6 @@
         <h2>{{ question.id }}: {{ question.title }}</h2>
         <p>{{ question.text }}</p>
 
-        <p id="enable-{{ question.id }}" data-value="{{ question.enable }}" data-questionId= "{{ question.id }}" class="message_already_answered hide">
-            {{ settings.message_already_answered }}
-        </p>
-
             <ul class="list-group ">
             {% for option in options %}
                 <li name="checkbox_div_{{ question.id }}" class="list-group-item">
@@ -51,6 +47,10 @@
                 </li>
             {% endfor %}
             </ul>
+
+            <p id="enable-{{ question.id }}" data-value="{{ question.enable }}" data-questionId= "{{ question.id }}" class="message_already_answered hide">
+                {{ settings.message_already_answered }}
+            </p>
 
             <div class="container">
                 <button class="btn btn-default show" type="button" id="showSolution_{{ question.id }}" onmouseup="get_answer({{ question.id }})">{{ settings.text_solution }}</button>

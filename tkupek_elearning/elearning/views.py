@@ -127,18 +127,31 @@ def log_last_seen(user):
 
 def statistic(request):
 
+    token = request.GET.get('token')
+
+    try:
+        auth = Setting.objects.get(active=1, token=token)
+    except ObjectDoesNotExist:
+        auth = None
+
     settings = Setting.objects.get(active=1)
-    users = User.objects.all()
 
-    for user in users:
-        user.questions_answered = UserAnswer.objects.filter(user=user.id).count()
+    if auth is not None:
+        settings = Setting.objects.get(active=1)
+        users = User.objects.all()
 
-    questions = Question.objects.all()
-    for question in questions:
-        question.answers = UserAnswer.objects.filter(question=question.id).count()
-        question.correct_answers = UserAnswer.objects.filter(question=question.id, correct=True).count()
-        if question.answers:
-            question.correct_answers_percentage = str(int(question.correct_answers / question.answers * 100))
-            question.correct_answers_percentage += str(' %')
+        for user in users:
+            user.questions_answered = UserAnswer.objects.filter(user=user.id).count()
 
-    return render_to_response('statistic.html', {'settings': settings, 'users': users, 'questions': questions})
+        questions = Question.objects.all()
+        for question in questions:
+            question.answers = UserAnswer.objects.filter(question=question.id).count()
+            question.correct_answers = UserAnswer.objects.filter(question=question.id, correct=True).count()
+            if question.answers:
+                question.correct_answers_percentage = str(int(question.correct_answers / question.answers * 100))
+                question.correct_answers_percentage += str(' %')
+
+        return render_to_response('statistic.html', {'settings': settings, 'users': users, 'questions': questions})
+
+    else:
+        return render_to_response('access_denied.html', {'settings': settings})

@@ -8,7 +8,7 @@ import json
 from tkupek_elearning.elearning.models import Setting, Question, Option, UserAnswer, User, UserAnswerOptions
 
 
-import pdb
+#import pdb
 
 
 def get_progress(user):
@@ -144,7 +144,7 @@ def statistic(request):
         return render_to_response('setting_null.html')
 
     try:
-        auth = Setting.objects.get(active=1, token=token)
+        auth = Setting.objects.get(active=1, statistic_token=token)
     except ObjectDoesNotExist:
         auth = None
 

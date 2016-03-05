@@ -27,6 +27,11 @@ class UserAdmin(admin.ModelAdmin):
         return self.readonly_fields + ('token', 'last_seen')
 
 
+class SettingAdmin(admin.ModelAdmin):
+    def get_readonly_fields(self, request, obj=None):
+
+        return self.readonly_fields + ('statistic_token',)
+
 admin.site.register(Question, QuestionAdmin)
-admin.site.register(Setting),
+admin.site.register(Setting, SettingAdmin),
 admin.site.register(User, UserAdmin)

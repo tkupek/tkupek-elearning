@@ -24,7 +24,7 @@
 
     <img src="{{ settings.logo }}" class="mainLogo">
     <h1>{{ settings.title }}</h1>
-    <p>{{ settings.message_welcome_user }}</p>
+    <p>{{ settings.message_welcome_user|safe }}</p>
     <div class="progress">
         <div id="progressbar" class="progress-bar progress-bar-striped" role="progressbar" style="width: {{ progress }}%">
         </div>

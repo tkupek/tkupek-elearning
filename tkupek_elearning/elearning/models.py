@@ -22,7 +22,7 @@ class Setting(models.Model):
     text_next = models.CharField(max_length=100, null=True)
     logo = models.CharField(max_length=256, null=False)
     active = models.BooleanField(unique=True, default=False)
-    token = models.CharField(max_length=40, null=True, default=gen_token)
+    statistic_token = models.CharField(max_length=40, null=True, default=gen_token, unique=True)
 
     def __unicode__(self):
         return self.title

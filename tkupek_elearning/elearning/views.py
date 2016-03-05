@@ -111,9 +111,9 @@ def get_answer(request):
 
         progress = get_progress(user)
         show_completed = False
-        if progress is 100 and user.completed_message_shown is False:
+        if progress is 100 and user.completed is False:
             show_completed = True
-            user.completed_message_shown = True
+            user.completed = True
             user.save()
 
         holder = {'options_id': options_id, 'progress': str(progress), 'show_completed': show_completed}

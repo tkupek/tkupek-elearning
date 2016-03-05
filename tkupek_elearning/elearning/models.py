@@ -66,7 +66,7 @@ class User(models.Model):
     token = models.CharField(max_length=40, null=True, default=gen_token, unique=True)
     name = models.CharField(max_length=100, null=False)
     last_seen = models.DateTimeField(null=True, blank=True)
-    completed_message_shown = models.BooleanField(null=False, default=False)
+    completed = models.BooleanField(null=False, default=False)
 
     def __unicode__(self):
         return self.name

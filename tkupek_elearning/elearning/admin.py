@@ -24,7 +24,7 @@ class UserAdmin(admin.ModelAdmin):
 
     def get_readonly_fields(self, request, obj=None):
 
-        return self.readonly_fields + ('token', 'last_seen')
+        return self.readonly_fields + ('token', 'last_seen', 'completed')
 
 
 class SettingAdmin(admin.ModelAdmin):

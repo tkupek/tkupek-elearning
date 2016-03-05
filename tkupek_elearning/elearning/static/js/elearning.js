@@ -22,10 +22,12 @@ var QueryString = function () {
 }();
 
 window.onload = init();
-//window.onbeforeunload = function() {
-        //var message = document.getElementById("popup-leave-message").innerHTML;
-        //return message;
-    //}
+window.onbeforeunload = function() {
+        if(document.getElementById("progressbar").style.width != "100%") {
+            var message = document.getElementById("popup-leave-message").innerHTML;
+            return message;
+        }
+    }
 
 function init() {
     enable_disable_question();

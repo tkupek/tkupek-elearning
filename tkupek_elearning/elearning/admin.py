@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from tkupek_elearning.elearning.models import Option, Setting, Question, UserAnswer, User, UserAnswerOptions
+from tkupek_elearning.elearning.models import Option, Setting, Question, UserAnswer, User
 
 
 class OptionInline(admin.TabularInline):

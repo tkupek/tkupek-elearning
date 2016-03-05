@@ -5,4 +5,4 @@ requirements:
 - python
 - django
 - sqlite3
-
+- tinymce

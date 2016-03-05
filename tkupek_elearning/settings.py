@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'tkupek_elearning.elearning'
+    'tkupek_elearning.elearning',
+    'tinymce',
 ]
 
 MIDDLEWARE_CLASSES = [

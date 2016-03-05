@@ -4,6 +4,7 @@ import hashlib
 import os
 
 from django.db import models
+from tinymce.models import HTMLField
 
 
 def gen_token():
@@ -30,8 +31,8 @@ class Setting(models.Model):
 class Question(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=100, null=True)
-    text = models.TextField(null=True)
-    explanation = models.TextField(null=True)
+    text = HTMLField(null=True)
+    explanation = HTMLField(null=True)
 
     def __unicode__(self):
         return self.title

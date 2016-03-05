@@ -35,7 +35,7 @@
     {% for question, options in questions_options.items %}
     <div class="container question" name="question" id="question_{{ question.id }}">
         <h2>{{ question.id }}: {{ question.title }}</h2>
-        <p>{{ question.text }}</p>
+        <p>{{ question.text|safe }}</p>
 
             <ul class="list-group ">
             {% for option in options %}
@@ -59,7 +59,7 @@
 
         <div class="margin10 well well-sm hide" id="explanation_{{ question.id }}">
             <h3>{{ settings.text_answer }}</h3>
-            <p>{{ question.explanation }}</p>
+            <p>{{ question.explanation|safe }}</p>
         </div>
         <div class="margin75"></div>
     </div>

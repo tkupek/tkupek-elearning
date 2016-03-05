@@ -136,6 +136,14 @@ def statistic(request):
     token = request.GET.get('token')
 
     try:
+        settings = Setting.objects.get(active=1)
+    except ObjectDoesNotExist:
+        settings = None
+
+    if settings is None:
+        return render_to_response('setting_null.html')
+
+    try:
         auth = Setting.objects.get(active=1, token=token)
     except ObjectDoesNotExist:
         auth = None

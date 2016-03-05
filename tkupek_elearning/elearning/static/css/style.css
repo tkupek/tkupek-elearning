@@ -55,3 +55,8 @@ p[id^="explanation_"] {
 .footer {
     color: #b3b3b3
 }
+.container {
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 800px; /* or 950px */
+}

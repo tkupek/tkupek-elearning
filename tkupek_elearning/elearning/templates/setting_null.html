@@ -25,8 +25,8 @@
     <p>Settings are not set. Please configure the service first!</p>
     <a id='adminurl' href=""></a>
     <script language='javascript' type="text/javascript">
-        url = location.protocol + '//' + location.host + '/admin';
-        link = document.getElementById("adminurl");
+        var url = location.protocol + '//' + location.host + '/admin';
+        var link = document.getElementById("adminurl");
         link.href=url;
         link.innerHTML=url;
     </script>

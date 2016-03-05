@@ -16,6 +16,17 @@
 
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <!-- Clipboard.js -->
+    <script src="https://cdn.jsdelivr.net/clipboard.js/1.5.8/clipboard.min.js"></script>
+
+    <script language='javascript' type="text/javascript">
+        var url = location.protocol + '//' + location.host + '/start';
+
+        function getUserUrl(token) {
+            return url + "?token=" + token;
+        }
+    </script>
 </head>
 
 <body>
@@ -33,12 +44,15 @@
             <td>name</td>
             <td>questions answered</td>
             <td>last seen</td>
+            <td>url (click to copy)</td>
         </tr>
     {% for user in users %}
         <tr>
             <td>{{ user.name }}</td>
             <td>{{ user.questions_answered }}</td>
             <td>{{ user.last_seen }}</td>
+            <td><a class="userlink" id="userlink{{ user.token }}" href="javascript:void(0)"></a></td>
+            <script>document.getElementById("userlink{{ user.token }}").innerHTML = getUserUrl('{{ user.token }}')</script>
         </tr>
     {% endfor %}
     </table>
@@ -69,7 +83,13 @@
         {{ settings.footer }}
     </div>
 
-
+    <script language='javascript' type="text/javascript">
+        new Clipboard('.userlink', {
+            text: function(trigger) {
+                return trigger.text;
+            }
+        });
+    </script>
 </div>
 
 </body>

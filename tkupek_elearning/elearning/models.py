@@ -48,7 +48,7 @@ class Option(models.Model):
 
 class User(models.Model):
 
-    token = models.CharField(max_length=40, null=True, default=gen_token)
+    token = models.CharField(max_length=40, null=True, default=gen_token, unique=True)
     name = models.CharField(max_length=100, null=False)
     last_seen = models.DateTimeField(null=True, blank=True)
 

@@ -22,6 +22,10 @@ var QueryString = function () {
 }();
 
 window.onload = init();
+//window.onbeforeunload = function() {
+        //var message = document.getElementById("popup-leave-message").innerHTML;
+        //return message;
+    //}
 
 function init() {
     enable_disable_question();
@@ -44,7 +48,6 @@ function enable_disable_question() {
         }
     }
 }
-
 
 function toggle_solution(id)
 {
@@ -137,8 +140,13 @@ function getCheckboxAnswers(id) {
 
 function parseResponse(id, responseText) {
 
-    var correctOptions = JSON.parse(responseText).options_id;
-    var progress = JSON.parse(responseText).progress;
+    var parse = JSON.parse(responseText);
+    var correctOptions = parse.options_id;
+    var progress = parse.progress;
+
+    if(parse.show_completed) {
+        $('#completed-modal').modal('show');
+    }
 
     setCorrectOptions(correctOptions, id)
     setProgress(progress)
@@ -176,6 +184,7 @@ function setCorrectOptions(correctOptions, id) {
 function setProgress(progress) {
     progressbar = document.getElementById("progressbar");
     progressbar.style.width = progress + "%";
+    progressbar.innerHTML = progress + "%";
 }
 
 function ajaxRequest() {
@@ -196,4 +205,3 @@ function ajaxRequest() {
  else
   return false
 }
-

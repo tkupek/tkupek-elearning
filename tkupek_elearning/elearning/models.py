@@ -13,19 +13,33 @@ def gen_token():
 
 class Setting(models.Model):
     title = models.CharField(max_length=100, null=True)
-    footer = models.TextField(null=True)
-    message_welcome_user = models.TextField(null=True)
-    message_access_denied = models.TextField(null=True)
-    message_already_answered = models.TextField(null=True)
-    text_answer = models.CharField(max_length=100, null=True)
-    text_solution = models.CharField(max_length=100, null=True)
-    text_next = models.CharField(max_length=100, null=True)
-    logo = models.CharField(max_length=256, null=False)
-    active = models.BooleanField(unique=True, default=False)
+    footer = models.TextField(null=True, blank=True)
+    message_welcome_user = models.TextField(null=True, blank=True)
+    message_access_denied = models.TextField(null=True, blank=True)
+    message_already_answered = models.TextField(null=True, blank=True)
+    text_answer = models.CharField(max_length=100, null=True, blank=True)
+    text_solution = models.CharField(max_length=100, null=True, blank=True)
+    text_next = models.CharField(max_length=100, null=True, blank=True)
+    popup_completed_title = models.CharField(max_length=100, null=True, blank=True)
+    popup_completed_message = models.TextField(null=True, blank=True)
+    popup_leave_message = models.TextField(null=True, blank=True)
+    logo = models.CharField(max_length=256, null=False, blank=True)
+    active = models.BooleanField(default=False)
     statistic_token = models.CharField(max_length=40, null=True, default=gen_token, unique=True)
 
     def __unicode__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if self.active:
+            try:
+                temp = Setting.objects.get(active=True)
+                if self != temp:
+                    temp.active = False
+                    temp.save()
+            except Setting.DoesNotExist:
+                pass
+        super(Setting, self).save(*args, **kwargs)
 
 
 class Question(models.Model):
@@ -52,6 +66,7 @@ class User(models.Model):
     token = models.CharField(max_length=40, null=True, default=gen_token, unique=True)
     name = models.CharField(max_length=100, null=False)
     last_seen = models.DateTimeField(null=True, blank=True)
+    completed_message_shown = models.BooleanField(null=False, default=False)
 
     def __unicode__(self):
         return self.name

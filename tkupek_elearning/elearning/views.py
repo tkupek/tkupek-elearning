@@ -14,8 +14,7 @@ from tkupek_elearning.elearning.models import Setting, Question, Option, UserAns
 def get_progress(user):
     progress_max = Question.objects.all().count()
     progress_current = UserAnswer.objects.filter(user=user.id).count()
-    progress = str(int(progress_current / progress_max * 100))
-    return progress
+    return int(progress_current / progress_max * 100)
 
 
 def start(request):
@@ -84,7 +83,6 @@ def get_answer(request):
         options_id = []
         for option in correct_options:
             options_id.append(option.id)
-        options_id = json.dumps(options_id)
 
         user_answer = get_user_answer(question, user)
 
@@ -111,7 +109,14 @@ def get_answer(request):
                 user_answer_options.option = Option.objects.get(id=option)
                 user_answer_options.save()
 
-        holder = {'options_id': options_id, 'progress': get_progress(user)}
+        progress = get_progress(user)
+        show_completed = False
+        if progress is 100 and user.completed_message_shown is False:
+            show_completed = True
+            user.completed_message_shown = True
+            user.save()
+
+        holder = {'options_id': options_id, 'progress': str(progress), 'show_completed': show_completed}
         holder = json.dumps(holder)
 
         return HttpResponse(holder)

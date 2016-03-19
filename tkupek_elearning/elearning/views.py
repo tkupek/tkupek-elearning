@@ -2,7 +2,7 @@ from __future__ import division
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
-import datetime
+from django.utils import timezone
 import json
 
 from tkupek_elearning.elearning.models import Setting, Question, Option, UserAnswer, User, UserAnswerOptions
@@ -132,7 +132,7 @@ def get_user_answer(question, user):
 
 
 def log_last_seen(user):
-    user.last_seen = datetime.datetime.now()
+    user.last_seen = timezone.now()
     user.save()
 
 

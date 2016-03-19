@@ -19,6 +19,7 @@ from django.contrib import admin
 import tkupek_elearning.elearning.views
 
 urlpatterns = [
+    url(r'^$', tkupek_elearning.elearning.views.start),
     url(r'^admin/', admin.site.urls),
     url(r'start', tkupek_elearning.elearning.views.start),
     url(r'api', tkupek_elearning.elearning.views.get_answer),

@@ -93,3 +93,4 @@ class UserAnswerOptions(models.Model):
 
     def __unicode__(self):
         return str(self.user_answer) + " - " + str(self.option)
+

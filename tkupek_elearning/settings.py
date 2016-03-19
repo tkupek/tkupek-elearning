@@ -118,3 +118,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = '/var/www/tkupek_elearning/elearning/static/'
 
+# TinyMCE settings
+TINYMCE_DEFAULT_CONFIG = {
+    'theme': "simple",
+    'custom_undo_redo_levels': 20,
+    'width': 500,
+}
+

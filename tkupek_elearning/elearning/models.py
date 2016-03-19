@@ -78,7 +78,7 @@ class UserAnswer(models.Model):
     correct = models.NullBooleanField(null=True)
 
     def __unicode__(self):
-        return str(self.user) + " - " + str(self.question.id)
+        return self.user.name + " - " + str(self.question.id)
 
     class Meta:
         unique_together = (('user', 'question'),)
@@ -92,4 +92,4 @@ class UserAnswerOptions(models.Model):
         unique_together = (('user_answer', 'option'),)
 
     def __unicode__(self):
-        return str(self.user_answer) + " - " + str(self.option)
+        return self.user_answer + " - " + self.option

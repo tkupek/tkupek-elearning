@@ -26,3 +26,4 @@ urlpatterns = [
     url(r'statistic', tkupek_elearning.elearning.views.statistic),
     url(r'^tinymce/', include('tinymce.urls')),
 ]
+

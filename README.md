@@ -2,7 +2,8 @@
 a pragmatic and simple elearning webapp based on python django
 
 requirements:
-- python
-- django
+- python 2.7
+- django 1.9
 - sqlite3
-- tinymce
+- tinymce 2.3
+

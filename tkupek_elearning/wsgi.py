@@ -19,3 +19,4 @@ sys.path.append(base_parent)
 os.environ["DJANGO_SETTINGS_MODULE"] = "tkupek_elearning.settings"
 
 application = get_wsgi_application()
+

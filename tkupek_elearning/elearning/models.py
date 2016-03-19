@@ -1,4 +1,3 @@
-# coding=utf-8
 from __future__ import unicode_literals
 
 import hashlib
@@ -79,7 +78,7 @@ class UserAnswer(models.Model):
     correct = models.NullBooleanField(null=True)
 
     def __unicode__(self):
-        return ""
+        return str(self.user) + " - " + str(self.question.id)
 
     class Meta:
         unique_together = (('user', 'question'),)
@@ -93,4 +92,4 @@ class UserAnswerOptions(models.Model):
         unique_together = (('user_answer', 'option'),)
 
     def __unicode__(self):
-        return unicode(str(self.user_answer) + " - " + str(self.option), "utf-8")
+        return str(self.user_answer) + " - " + str(self.option)

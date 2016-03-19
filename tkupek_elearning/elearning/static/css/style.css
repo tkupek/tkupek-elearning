@@ -1,13 +1,11 @@
-body {
-
-}
+body {}
 
 p {
-text-align: justify;
+	text-align: justify;
 }
 
 #showSolution {
- display: block;
+	display: block;
 }
 
 p[id^="explanation_"] {
@@ -15,48 +13,50 @@ p[id^="explanation_"] {
 }
 
 .show {
-    display: block;
+	display: block;
 }
 
 .hide {
-    display: none;
+	display: none;
 }
 
 .margin10 {
-    margin-top: 10px;
+	margin-top: 10px;
 }
 
 .margin25 {
-    margin-top: 25px;
+	margin-top: 25px;
 }
 
 .margin50 {
-    margin-top: 50px;
+	margin-top: 50px;
 }
 
 .margin75 {
-    margin-top: 75px;
+	margin-top: 75px;
 }
 
 .mainLogo {
-    width: 300px;
-    height: auto;
-    float: right;
+	width: 300px;
+	height: auto;
+	float: right;
 }
 
 .message_already_answered {
-    font-style: italic;
+	font-style: italic;
+	color: darkgreen;
 }
 
 .table_headline {
-    font-weight: bold;
+	font-weight: bold;
 }
 
 .footer {
-    color: #b3b3b3
+	color: #b3b3b3
 }
 .container {
-  margin-right: auto;
-  margin-left: auto;
-  max-width: 800px; /* or 950px */
+	margin-right: auto;
+	margin-left: auto;
+	max-width: 800px; /* or 950px */
 }
+

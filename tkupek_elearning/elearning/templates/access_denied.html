@@ -24,9 +24,10 @@
     <img src="{{ settings.logo }}" class="mainLogo">
     <h1>{{ settings.title }}</h1>
     <hr/>
-    <p>{{ settings.message_access_denied }}</p>
+    <p>{{ settings.message_access_denied|safe }}</p>
 
 </div>
 
 </body>
 </html>
+

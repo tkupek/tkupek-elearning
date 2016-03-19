@@ -77,7 +77,7 @@
             </ul>
 
             <p id="enable-{{ question.id }}" data-value="{{ question.enable }}" data-questionId= "{{ question.id }}" class="message_already_answered hide">
-                {{ settings.message_already_answered }}
+                {{ settings.message_already_answered|safe }}
             </p>
 
             <div class="container">
@@ -95,10 +95,11 @@
 
     <div class="margin50" ></div>
     <hr/>
-    {{ settings.footer }}
+    {{ settings.footer|safe }}
 
 </div>
 
 <script type="text/javascript" src="{% static 'js/elearning.js' %}"></script>
 </body>
 </html>
+

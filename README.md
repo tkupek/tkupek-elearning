@@ -1,4 +1,4 @@
-# tkupek-elearning
+# simple-elearning
 a pragmatic and simple elearning webapp based on python django
 
 requirements:
